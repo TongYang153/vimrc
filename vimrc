@@ -81,7 +81,8 @@ set fdm=syntax    " 开启折叠: 按语法折叠
 set background=dark
 "set background=light
 set t_Co=256
-set cursorline            "在gvim中高亮当前行
+set cursorline            "高亮当前行
+set cursorcolumn          "高亮当前列
 if (g:isGUI)
     colorscheme wombat
     hi cursorline guibg=#333333
