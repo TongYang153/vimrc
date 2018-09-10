@@ -183,7 +183,11 @@ nmap <F2> :%s///g
 " use ,. to copy a word quickly
 nmap <leader>. wbvey
 " use ,, to search "0 in shell
-map <leader><leader> wbvey:!ag <C-R>0<cr>
+if executable('ag')
+    map <leader><leader> wbvey:!ag <C-R>0<cr>
+else
+    map <leader><leader> wbvey:!grep -rn <C-R>0 *<cr> 
+endif
 
 
 nmap qq :q<cr>
