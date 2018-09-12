@@ -185,9 +185,9 @@ nmap <F2> :%s///g
 nmap <leader>. wbvey
 " use ,, to search "0 in shell
 if executable('ag')
-    map <leader><leader> wbvey:!ag <C-R>0<cr>
+    map <leader><leader> wbvey:!ag <C-R>0 <cr>
 else
-    map <leader><leader> wbvey:!grep -rn <C-R>0 *<cr> 
+    map <leader><leader> wbvey:!grep -rn <C-R>0 * <cr> 
 endif
 
 
