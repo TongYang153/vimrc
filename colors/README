@@ -1,0 +1,7 @@
+
+将配色文件拷贝到 /usr/share/vim/vim7x/colors/ 目录下
+在 .vimrc 中用 colorscheme name 来使用新的配色方案
+
+
+solarized.vim 适合于 GUI LINUX
+wombat256.vim 适合于纯命令行 LINUX
