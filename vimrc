@@ -255,7 +255,7 @@ set completeopt=menu
 let OmniCpp_ShowPrototypeInAbbr = 1 
 let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
 let OmniCpp_MayCompleteScope = 1 
-let OmniCpp_ShowPrototypeInAbbr = 0 
+let OmniCpp_ShowPrototypeInAbbr = 1 
 let OmniCpp_SelectFirstItem = 2 
 " c-j自动补全，当补全菜单打开时，c-j,k上下选择
 imap <expr> <c-j>      pumvisible()?"\<C-N>":"\<C-X><C-O>"
