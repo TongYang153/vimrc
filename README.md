@@ -7,3 +7,6 @@ My personal setting for vim.
 
 * simple setting
 
+## install
+
+./install.sh
