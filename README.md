@@ -3,10 +3,25 @@ Vimrc
 
 My personal setting for vim.
 
-## some explanation
+## description
 
-* simple setting
+- simple setting
+
+### scripts
+
+- taglist 
+- DoxygenToolkit
+- NERD_tree 
+- nerdcommenter 
+- omnicppcomplete
+- vim-autocomplpop
 
 ## install
 
 ./install.sh
+
+## documentations
+
+- [VIM-tips](docs/vim.txt)
+- [VimScript](docs/vimscript.md)
+
