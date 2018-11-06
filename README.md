@@ -15,6 +15,7 @@ My personal setting for vim.
 - nerdcommenter 
 - omnicppcomplete
 - vim-autocomplpop
+- snipMate
 
 ## install
 
