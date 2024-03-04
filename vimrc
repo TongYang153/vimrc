@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Basic vimrc ----- Yu Lei 
+" Basic vimrc ----- Yang TianYu 
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ","    " 比较习惯用;作为命令前缀，右手小拇指直接能按到
@@ -36,11 +36,12 @@ filetype indent on
 set shortmess=atI   " 去掉欢迎界面
 set autoindent
 autocmd BufEnter * :syntax sync fromstart
+autocmd BufWritePre *.c,*.h :%s/\s\+$//e
 set nu              " 显示行号
 set showcmd         " 显示命令
 set lz              " 当运行宏时，在命令执行完成之前，不重绘屏幕
 set hid             " 可以在没有保存的情况下切换buffer
-set backspace=eol,start,indent 
+set backspace=eol,start,indent
 set whichwrap+=<,>,h,l " 退格键和方向键可以换行
 set incsearch       " 增量式搜索
 set nohlsearch
@@ -55,12 +56,12 @@ set lbr             " 在breakat字符处而不是最后一个字符处断行
 set ai              " 自动缩进
 set si              " 智能缩进
 set cindent         " C/C++风格缩进
-set wildmenu         
+set wildmenu
 set nofen
 set fdl=10
 
 " tab转化为4个字符
-set expandtab
+set noexpandtab
 set smarttab
 set shiftwidth=4
 set tabstop=4
@@ -96,7 +97,7 @@ if (g:isGUI)
     " 不显示菜单栏
     "set guioptions-=m
 else
-    colorscheme wombat256mod
+    "colorscheme wombat256mod
     "colorscheme koehler
     "hi cursorline guibg=#333333
     "hi CursorColumn guibg=#333333
@@ -125,7 +126,9 @@ function! CurDir()
     let curdir = substitute(getcwd(), $HOME, "~", "g")
     return curdir
 endfunction
-set statusline=[%n]\ %f%m%r%h\ \|\ \ pwd:\ %{CurDir()}\ \ \|%=\|\ %l,%c\ %p%%\ \|\ ascii=%b,hex=%b%{((&fenc==\"\")?\"\":\"\ \|\ \".&fenc)}\ \|\ %{$USER}\ @\ %{hostname()}\ 
+set statusline=[%n]\ %f%m%r%h\ \|\ \ pwd:\ %{CurDir()}\ \ \|%=\|\ %l,%c\ %p%%\ \|\ ascii=%b,hex=%b%{((&fenc==\"\")?\"\":\"\ \|\ \".&fenc)}\ \|\ %{$USER}\ @\ %{hostname()}\
+
+
 
 " 第80列往后加下划线
 "au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
@@ -173,7 +176,7 @@ map <silent> <F10> :TlistToggle<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 " 用 c-j,c-k 在 tab 之间切换
 """""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <C-A> :tabnew  
+nmap <C-A> :tabnew
 
 nn <C-J> :tabn<cr>
 nn <C-K> :tabp<cr>
@@ -239,7 +242,7 @@ let s:PlugWinSize = 25
 "map <silent> <t> :TlistToggle<cr>
 "let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 let Tlist_Show_One_File = 0
-let Tlist_Exit_OnlyWindow = 1 
+let Tlist_Exit_OnlyWindow = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_File_Fold_Auto_Close = 1
 let Tlist_GainFocus_On_ToggleOpen = 0
@@ -252,11 +255,11 @@ let Tlist_Display_Prototype = 0
 " OmniCppComplete.vim
 " http://www.vim.org/scripts/script.php?script_id=1520
 set completeopt=menu
-let OmniCpp_ShowPrototypeInAbbr = 1 
+let OmniCpp_ShowPrototypeInAbbr = 1
 let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
-let OmniCpp_MayCompleteScope = 1 
-let OmniCpp_ShowPrototypeInAbbr = 1 
-let OmniCpp_SelectFirstItem = 2 
+let OmniCpp_MayCompleteScope = 1
+let OmniCpp_ShowPrototypeInAbbr = 1
+let OmniCpp_SelectFirstItem = 2
 " c-j自动补全，当补全菜单打开时，c-j,k上下选择
 imap <expr> <c-j>      pumvisible()?"\<C-N>":"\<C-X><C-O>"
 imap <expr> <c-k>      pumvisible()?"\<C-P>":"\<esc>"
@@ -264,7 +267,15 @@ imap <expr> <c-k>      pumvisible()?"\<C-P>":"\<esc>"
 imap <C-]>             <C-X><C-]>
 imap <C-F>             <C-X><C-F>
 imap <C-D>             <C-X><C-D>
-imap <C-L>             <C-X><C-L> 
+imap <C-L>             <C-X><C-L>
+
+" tag 跳转
+nmap <leader>] <C-W>10]
+nmap <leader>3 :tnext<cr>
+nmap <leader>2 :tprev<cr>
+nmap <leader>1 :tfirst<cr>
+nmap <leader>4 :tlast<cr>
+
 
 " NERD_commenter.vim
 " http://www.vim.org/scripts/script.php?script_id=1218
@@ -278,12 +289,11 @@ map <leader>cu ,cu
 " http://www.vim.org/scripts/script.php?script_id=1658
 let NERDTreeShowHidden = 1
 let NERDTreeWinPos = "left"
-let NERDTreeWinSize = s:PlugWinSize 
+let NERDTreeWinSize = s:PlugWinSize
+let NERDTreeShowBookmarks = 1
+" let loaded_netrwPlugin = 0
 nmap <leader>n :NERDTreeToggle<cr>
-
-" DoxygenToolkit.vim
-" http://www.vim.org/scripts/script.php?script_id=987
-" 暂时没有使用
+nmap <leader>m :NERDTreeFind<cr>
 
 " 更新ctags和cscope索引
 " href: http://www.vimer.cn/2009/10/把vim打造成一个真正的ide2.html
@@ -344,26 +354,41 @@ if has("cscope")
     set csto=1
     set cst
     set nocsverb
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
     if filereadable("cscope.out")
         cs add cscope.out
     endif
     set csverb
     " s: C语言符号  g: 定义     d: 这个函数调用的函数 c: 调用这个函数的函数
     " t: 文本       e: egrep模式    f: 文件     i: include本文件的文件
-    nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+    nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>
     nmap <leader>sg :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <leader>sc :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-    nmap <leader>st :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-    nmap <leader>se :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-    nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
-    nmap <leader>si :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
-    nmap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+    nmap <leader>sc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>st :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>se :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <leader>si :cs find i <C-R>=expand("<cfile>")<CR><CR>
+    nmap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>
+"    nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+"    nmap <leader>sg :cs find g <C-R>=expand("<cword>")<CR><CR>
+"    nmap <leader>sc :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+"    nmap <leader>st :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+"    nmap <leader>se :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+"    nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
+"    nmap <leader>si :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
+"    nmap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
 endif
 
 " Quick Fix 设置
 map <F3> :cw<cr>
 map <F4> :cp<cr>
 map <F5> :cn<cr>
+
+" 复制垂直分屏
+nmap <leader>v <C-W>v
+
+" 复制水平分屏
+nmap <leader>h <C-W>s
 
 " Buffers Explorer （需要genutils.vim）
 " http://vim.sourceforge.net/scripts/script.php?script_id=42
