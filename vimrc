@@ -1,4 +1,4 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"e""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Basic vimrc ----- Yang TianYu 
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -29,51 +29,91 @@ else
     let g:isGUI = 0
 endif
 
-set nocompatible    " 关闭兼容模式
-syntax enable       " 语法高亮
-filetype plugin on  " 文件类型插件
+set nocompatible
+syntax enable       
+filetype plugin on  
 filetype indent on
-set shortmess=atI   " 去掉欢迎界面
+set shortmess=atI   
 set autoindent
 autocmd BufEnter * :syntax sync fromstart
 autocmd BufWritePre *.c,*.h :%s/\s\+$//e
-set nu              " 显示行号
-set showcmd         " 显示命令
-set lz              " 当运行宏时，在命令执行完成之前，不重绘屏幕
-set hid             " 可以在没有保存的情况下切换buffer
+set nu              
+set showcmd     
+set lz          
+set hid             
 set backspace=eol,start,indent
-set whichwrap+=<,>,h,l " 退格键和方向键可以换行
-set incsearch       " 增量式搜索
+set whichwrap+=<,>,h,l 
+set incsearch   
 set nohlsearch
-set hlsearch        " 高亮搜索
-set ignorecase      " 搜索时忽略大小写
-set magic           " 额，自己:h magic吧，一行很难解释
-set showmatch       " 显示匹配的括号
-set nobackup        " 关闭备份
+set hlsearch    
+"set ignorecase  
+set magic       
+set showmatch   
+set nobackup    
 set nowb
-set noswapfile      " 不使用swp文件，注意，错误退出后无法恢复
-set lbr             " 在breakat字符处而不是最后一个字符处断行
-set ai              " 自动缩进
-set si              " 智能缩进
-set cindent         " C/C++风格缩进
+set noswapfile  
+set lbr         
+set ai          
+set si      
+set cindent     
 set wildmenu
 set nofen
 set fdl=10
 
 " tab转化为4个字符
-set noexpandtab
+set autoindent
 set smarttab
-set shiftwidth=4
-set tabstop=4
+set cindent 
+
+
+autocmd BufRead,BufNewFile *.h setlocal filetype=c
+
+" 编辑时按 Tab 键插入空格
+"set expandtab          " 将 Tab 键转为空格
+"set tabstop=4          " Tab 字符宽度设置为 4
+"set shiftwidth=4       " 缩进宽度设置为 4
+"set softtabstop=4      " 编辑时 Tab 的行为
+
+"" 配置进入编辑模式时使用空格
+"autocmd FileType * setlocal expandtab
+"autocmd FileType * autocmd InsertEnter * setlocal expandtab
+"autocmd FileType * autocmd InsertLeave * setlocal noexpandtab
+
+"" 在保存和格式刷时调整缩进
+"autocmd FileType * autocmd BufWritePre * setlocal noexpandtab
+"autocmd FileType * autocmd BufWritePre * execute 'normal! gg=G' 
+"autocmd FileType * autocmd BufWritePre * setlocal expandtab         
+"autocmd FileType * autocmd BufWritePre * retab!                     
+
+" 编辑时按 Tab 键插入空格
+set expandtab           " 将 Tab 键转为空格
+set tabstop=2           " Tab 字符宽度设置为 4
+set shiftwidth=2        " 缩进宽度设置为 4
+set softtabstop=2       " 编辑时 Tab 的行为
+
+autocmd BufWritePre * retab!
+
 
 " 不使用beep或flash 
 set vb t_vb=
-
 
 set history=400   " vim记住的历史操作的数量，默认的是20
 set autoread      " 当文件在外部被修改时，自动重新读取
 set mouse=a       " 在所有模式下都允许使用鼠标，还可以是n,v,i,c等
 set fdm=syntax    " 开启折叠: 按语法折叠
+
+set cinoptions+=L0
+
+"setlocal indentexpr=GetCustomIndent()
+
+"function! GetCustomIndent()
+"let l:line = getline(v:lnum - 1)
+"if l:line =~ '^#\s*define' && l:line !~ ';$'
+"return indent(v:lnum - 1)
+"else
+"return cindent(v:lnum)
+"endif
+"endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -181,7 +221,8 @@ nmap <C-A> :tabnew
 nn <C-J> :tabn<cr>
 nn <C-K> :tabp<cr>
 
-nmap <F2> :%s///g
+"nmap <F2> :%s///gc
+nmap <F2> :.,$s///gc
 
 
 " use ,. to copy a word quickly
@@ -369,14 +410,14 @@ if has("cscope")
     nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<CR><CR>
     nmap <leader>si :cs find i <C-R>=expand("<cfile>")<CR><CR>
     nmap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>
-"    nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-"    nmap <leader>sg :cs find g <C-R>=expand("<cword>")<CR><CR>
-"    nmap <leader>sc :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-"    nmap <leader>st :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-"    nmap <leader>se :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-"    nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
-"    nmap <leader>si :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
-"    nmap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+    "    nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+    "    nmap <leader>sg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    "    nmap <leader>sc :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+    "    nmap <leader>st :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+    "    nmap <leader>se :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+    "    nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
+    "    nmap <leader>si :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
+    "    nmap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
 endif
 
 " Quick Fix 设置
@@ -418,7 +459,11 @@ let g:vimwiki_list = [wiki]
 "pythoncomplete配置
 autocmd filetype python set omnifunc=pythoncomplete#Complete
 
+set splitright
 
+autocmd FileType terminal set splitright
+
+nnoremap <silent> <leader>t :set splitright<CR>:vsp<CR>:terminal<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -444,11 +489,64 @@ autocmd filetype python set omnifunc=pythoncomplete#Complete
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
+" 定义全局变量，用于记录当前使用的颜色索引
+let g:current_color_index = 0
 
 
+highlight MatchOne guifg=#FF0000 guibg=#FFFF80 ctermfg=Red ctermbg=Yellow
+highlight MatchTwo guifg=#00FF00 guibg=#002200 ctermfg=Green ctermbg=Black
+highlight MatchThree guifg=#0000FF guibg=#D0D0FF ctermfg=Blue ctermbg=White
+highlight MatchFour guifg=#FFD700 guibg=#3F3F00 ctermfg=Yellow ctermbg=Brown
+highlight MatchFive guifg=#FF1493 guibg=#FFE0F0 ctermfg=Red ctermbg=White
+highlight MatchSix guifg=#00FFFF guibg=#001F1F ctermfg=Cyan ctermbg=Black
+highlight MatchSeven guifg=#FF8C00 guibg=#302010 ctermfg=Yellow ctermbg=Red
+highlight MatchEight guifg=#9400D3 guibg=#E6D6FF ctermfg=Magenta ctermbg=White
+highlight MatchNine guifg=#1E90FF guibg=#001A4D ctermfg=Blue ctermbg=Black
+highlight MatchTen guifg=#FFD700 guibg=#4D4D00 ctermfg=Yellow ctermbg=Brown
 
 
+function! AddHighlight(...)
+    " 获取传入的多个词汇
+    let words = a:000
+    let colors = ['MatchOne', 'MatchTwo', 'MatchThree', 'MatchFour', 'MatchFive',
+                  \ 'MatchSix', 'MatchSeven', 'MatchEight', 'MatchNine', 'MatchTen']
+
+    " 检查是否有传入词汇
+    if len(words) == 0
+        echo "No words provided"
+        return
+    endif
+
+    " 遍历每个词汇并高亮
+    for i in range(len(words))
+        let word = words[i]
+
+        " 如果词汇不为空
+        if word != ''
+            " 获取当前颜色
+            let color = colors[g:current_color_index]
+
+            " 使用 matchadd() 添加高亮
+            call matchadd(color, '\<' . word . '\>')
+
+            " 更新颜色索引，循环使用颜色
+            let g:current_color_index = (g:current_color_index + 1) % len(colors)
+        endif
+    endfor
+endfunction
 
 
+" 定义命令来高亮多个词汇
+command! -nargs=+ HighlightWords call AddHighlight(<f-args>)
+
+" 光标单词高亮
+nnoremap <leader>t :call AddHighlight(expand('<cword>'))<CR>
+
+" 定义快捷键：手动输入多个词汇进行高亮
+nnoremap <leader>T :call AddHighlight(input('Enter words to highlight (space separated): '))<CR>
+
+
+" 定义快捷键：清除所有高亮
+nnoremap <leader>c :call clearmatches()<CR>
 
 
